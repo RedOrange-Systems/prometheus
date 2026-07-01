@@ -2,8 +2,8 @@
     <a href="https://prometheus.io" target="_blank"><img alt="Prometheus" src="/documentation/images/prometheus-logo.svg"></a><br>Prometheus
 </h1>
 
-<p align="center">Visit <a href="https://prometheus.io" target="_blank">prometheus.io</a> for the full documentation,
-examples and guides.</p>
+<p align="center">Visita <a href="https://prometheus.io" target="_blank">prometheus.io</a> para la documentación completa,
+ejemplos y guías.</p>
 
 <div align="center">
 
@@ -19,105 +19,105 @@ examples and guides.</p>
 
 </div>
 
-Prometheus, a [Cloud Native Computing Foundation](https://cncf.io/) project, is a systems and service monitoring system. It collects metrics
-from configured targets at given intervals, evaluates rule expressions,
-displays the results, and can trigger alerts when specified conditions are observed.
+Prometheus, un proyecto de la [Cloud Native Computing Foundation](https://cncf.io/), es un sistema de monitorización de sistemas y servicios. Recopila métricas
+de los objetivos configurados en intervalos determinados, evalúa expresiones de reglas,
+muestra los resultados y puede activar alertas cuando se observan condiciones específicas.
 
-The features that distinguish Prometheus from other metrics and monitoring systems are:
+Las características que distinguen a Prometheus de otros sistemas de métricas y monitorización son:
 
-* A **multi-dimensional** data model (time series defined by metric name and set of key/value dimensions)
-* PromQL, a **powerful and flexible query language** to leverage this dimensionality
-* No dependency on distributed storage; **single server nodes are autonomous**
-* An HTTP **pull model** for time series collection
-* **Pushing time series** is supported via an intermediary gateway for batch jobs
-* Targets are discovered via **service discovery** or **static configuration**
-* Multiple modes of **graphing and dashboarding support**
-* Support for hierarchical and horizontal **federation**
+* Un modelo de datos **multidimensional** (series temporales definidas por el nombre de la métrica y un conjunto de dimensiones clave/valor)
+* PromQL, un **lenguaje de consulta potente y flexible** que aprovecha esta dimensionalidad
+* Sin dependencia de almacenamiento distribuido; **los nodos de servidor individuales son autónomos**
+* Un **modelo de extracción (pull) por HTTP** para la recolección de series temporales
+* El **envío de series temporales (push)** es compatible mediante una pasarela intermedia para trabajos por lotes
+* Los objetivos se descubren mediante **descubrimiento de servicios** o **configuración estática**
+* Múltiples modos de **compatibilidad con gráficos y paneles de control**
+* Compatibilidad con **federación** jerárquica y horizontal
 
-## Architecture overview
+## Descripción general de la arquitectura
 
-![Architecture overview](documentation/images/architecture.svg)
+![Descripción general de la arquitectura](documentation/images/architecture.svg)
 
-## Install
+## Instalación
 
-There are various ways to install Prometheus.
+Existen varias formas de instalar Prometheus.
 
-### Precompiled binaries
+### Binarios precompilados
 
-Precompiled binaries for released versions are available in the
-[*download* section](https://prometheus.io/download/)
-on [prometheus.io](https://prometheus.io). Using the latest production release binary
-is the recommended way to install Prometheus.
-See the [Installing](https://prometheus.io/docs/introduction/install/)
-chapter in the documentation for all the details.
+Los binarios precompilados de las versiones publicadas están disponibles en la
+[sección de *descargas*](https://prometheus.io/download/)
+en [prometheus.io](https://prometheus.io). Usar el binario de la última versión de producción
+es la forma recomendada de instalar Prometheus.
+Consulta el capítulo [Instalación](https://prometheus.io/docs/introduction/install/)
+en la documentación para conocer todos los detalles.
 
-### Docker images
+### Imágenes Docker
 
-Docker images are available on [Quay.io](https://quay.io/repository/prometheus/prometheus) or [Docker Hub](https://hub.docker.com/r/prom/prometheus/).
+Las imágenes Docker están disponibles en [Quay.io](https://quay.io/repository/prometheus/prometheus) o en [Docker Hub](https://hub.docker.com/r/prom/prometheus/).
 
-You can launch a Prometheus container for trying it out with
+Puedes lanzar un contenedor de Prometheus para probarlo con
 
 ```bash
 docker run --name prometheus -d -p 127.0.0.1:9090:9090 prom/prometheus
 ```
 
-Prometheus will now be reachable at <http://localhost:9090/>.
+Prometheus estará ahora accesible en <http://localhost:9090/>.
 
-### Building from source
+### Compilación desde el código fuente
 
-To build Prometheus from source code, you need:
+Para compilar Prometheus desde el código fuente, necesitas:
 
-* Go: Version specified in [go.mod](./go.mod) or greater.
-* NodeJS: Version specified in [.nvmrc](./web/ui/.nvmrc) or greater.
-* npm: Version 10 or greater (check with `npm --version` and [here](https://www.npmjs.com/)).
+* Go: La versión especificada en [go.mod](./go.mod) o superior.
+* NodeJS: La versión especificada en [.nvmrc](./web/ui/.nvmrc) o superior.
+* npm: Versión 10 o superior (verifica con `npm --version` y [aquí](https://www.npmjs.com/)).
 
-Start by cloning the repository:
+Empieza clonando el repositorio:
 
 ```bash
 git clone https://github.com/prometheus/prometheus.git
 cd prometheus
 ```
 
-You can use the `go` tool to build and install the `prometheus`
-and `promtool` binaries into your `GOPATH`:
+Puedes usar la herramienta `go` para compilar e instalar los binarios `prometheus`
+y `promtool` en tu `GOPATH`:
 
 ```bash
 go install github.com/prometheus/prometheus/cmd/...
 prometheus --config.file=your_config.yml
 ```
 
-*However*, when using `go install` to build Prometheus, Prometheus will expect to be able to
-read its web assets from local filesystem directories under `web/ui/static`. In order for
-these assets to be found, you will have to run Prometheus from the root of the cloned
-repository. Note also that this directory does not include the React UI unless it has been
-built explicitly using `make assets` or `make build`.
+*Sin embargo*, al usar `go install` para compilar Prometheus, Prometheus esperará poder
+leer sus recursos web desde directorios del sistema de archivos local bajo `web/ui/static`. Para que
+estos recursos se encuentren, tendrás que ejecutar Prometheus desde la raíz del repositorio
+clonado. Ten en cuenta también que este directorio no incluye la interfaz React a menos que se haya
+compilado explícitamente usando `make assets` o `make build`.
 
-An example of the above configuration file can be found [here.](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml)
+Puedes encontrar un ejemplo del archivo de configuración anterior [aquí.](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml)
 
-You can also build using `make build`, which will compile in the web assets so that
-Prometheus can be run from anywhere:
+También puedes compilar usando `make build`, que incluirá los recursos web compilados para que
+Prometheus pueda ejecutarse desde cualquier lugar:
 
 ```bash
 make build
 ./prometheus --config.file=your_config.yml
 ```
 
-The Makefile provides several targets:
+El Makefile ofrece varios objetivos (targets):
 
-* *build*: build the `prometheus` and `promtool` binaries (includes building and compiling in web assets)
-* *test*: run the tests
-* *test-short*: run the short tests
-* *format*: format the source code
-* *vet*: check the source code for common errors
-* *assets*: build the React UI
+* *build*: compila los binarios `prometheus` y `promtool` (incluye la compilación e incorporación de los recursos web)
+* *test*: ejecuta las pruebas
+* *test-short*: ejecuta las pruebas cortas
+* *format*: da formato al código fuente
+* *vet*: verifica el código fuente en busca de errores comunes
+* *assets*: compila la interfaz React
 
-### Service discovery plugins
+### Complementos de descubrimiento de servicios
 
-Prometheus is bundled with many service discovery plugins. You can customize
-which service discoveries are included in your build using Go build tags.
+Prometheus incluye muchos complementos de descubrimiento de servicios. Puedes personalizar
+qué descubrimientos de servicios se incluyen en tu compilación usando etiquetas (tags) de compilación de Go.
 
-To exclude service discoveries when building with `make build`, add the desired
-tags to the `.promu.yml` file under `build.tags.all`:
+Para excluir descubrimientos de servicios al compilar con `make build`, añade las etiquetas
+deseadas al archivo `.promu.yml` bajo `build.tags.all`:
 
 ```yaml
 build:
@@ -125,27 +125,27 @@ build:
         all:
             - netgo
             - builtinassets
-            - remove_all_sd           # Exclude all optional SDs
-            - enable_kubernetes_sd    # Re-enable only kubernetes
+            - remove_all_sd           # Excluir todos los SD opcionales
+            - enable_kubernetes_sd    # Volver a habilitar solo kubernetes
 ```
 
-Then run `make build` as usual. Alternatively, when using `go build` directly:
+Luego ejecuta `make build` como de costumbre. Alternativamente, al usar `go build` directamente:
 
 ```bash
 go build -tags "remove_all_sd,enable_kubernetes_sd" ./cmd/prometheus
 ```
 
-Available build tags:
-* `remove_all_sd` - Exclude all optional service discoveries (keeps file_sd, static_sd, and http_sd)
-* `enable_<name>_sd` - Re-enable a specific SD when using `remove_all_sd`
+Etiquetas de compilación disponibles:
+* `remove_all_sd` - Excluye todos los descubrimientos de servicios opcionales (mantiene file_sd, static_sd y http_sd)
+* `enable_<name>_sd` - Vuelve a habilitar un SD específico cuando se usa `remove_all_sd`
 
-If you add out-of-tree plugins, which we do not endorse at the moment,
-additional steps might be needed to adjust the `go.mod` and `go.sum` files. As
-always, be extra careful when loading third party code.
+Si agregas complementos externos al árbol del proyecto (out-of-tree), lo cual no respaldamos por el momento,
+podrían ser necesarios pasos adicionales para ajustar los archivos `go.mod` y `go.sum`. Como
+siempre, ten mucho cuidado al cargar código de terceros.
 
-### Building the Docker image
+### Compilación de la imagen Docker
 
-You can build a docker image locally with the following commands:
+Puedes compilar una imagen Docker localmente con los siguientes comandos:
 
 ```bash
 make promu
@@ -153,76 +153,74 @@ promu crossbuild -p linux/amd64
 make common-docker-amd64
 ```
 
-The `make docker` target is intended only for use in our CI system and will not
-produce a fully working image when run locally.
+El objetivo `make docker` está destinado únicamente para su uso en nuestro sistema de CI y no
+producirá una imagen totalmente funcional si se ejecuta localmente.
 
-## Using Prometheus as a Go Library
+## Usar Prometheus como una biblioteca de Go
 
-Within the Prometheus project, repositories such as [prometheus/common](https://github.com/prometheus/common) and
-[prometheus/client-golang](https://github.com/prometheus/client-golang) are designed as re-usable libraries.
+Dentro del proyecto Prometheus, repositorios como [prometheus/common](https://github.com/prometheus/common) y
+[prometheus/client-golang](https://github.com/prometheus/client-golang) están diseñados como bibliotecas reutilizables.
 
-The [prometheus/prometheus](https://github.com/prometheus/prometheus) repository builds a stand-alone program and is not
-designed for use as a library. We are aware that people do use parts as such,
-and we do not put any deliberate inconvenience in the way, but we want you to be
-aware that no care has been taken to make it work well as a library. For instance,
-you may encounter errors that only surface when used as a library.
+El repositorio [prometheus/prometheus](https://github.com/prometheus/prometheus) compila un programa independiente y no
+está diseñado para usarse como biblioteca. Somos conscientes de que la gente usa partes de él como tal,
+y no ponemos ningún inconveniente deliberado en el camino, pero queremos que sepas que no se ha tenido
+cuidado alguno para que funcione bien como biblioteca. Por ejemplo, podrías encontrar errores que solo
+surgen cuando se usa como biblioteca.
 
 ### Remote Write
 
-We are publishing our Remote Write protobuf independently at
+Estamos publicando nuestro protobuf de Remote Write de forma independiente en
 [buf.build](https://buf.build/prometheus/prometheus/assets).
 
-You can use that as a library:
+Puedes usarlo como una biblioteca:
 
 ```shell
 go get buf.build/gen/go/prometheus/prometheus/protocolbuffers/go@latest
 ```
 
-This is experimental.
+Esto es experimental.
 
-### Prometheus code base
+### Base de código de Prometheus
 
-In order to comply with [go mod](https://go.dev/ref/mod#versions) rules,
-Prometheus release number do not exactly match Go module releases.
+Para cumplir con las reglas de [go mod](https://go.dev/ref/mod#versions),
+los números de versión de Prometheus no coinciden exactamente con las versiones de los módulos de Go.
 
-For the
-Prometheus v3.y.z releases, we are publishing equivalent v0.3y.z tags. The y in v0.3y.z is always padded to two digits, with a leading zero if needed.
+Para las versiones de Prometheus v3.y.z, estamos publicando etiquetas v0.3y.z equivalentes. La y en v0.3y.z siempre se completa con dos dígitos, con un cero inicial si es necesario.
 
-Therefore, a user that would want to use Prometheus v3.0.0 as a library could do:
+Por lo tanto, un usuario que quisiera usar Prometheus v3.0.0 como biblioteca podría hacer:
 
 ```shell
 go get github.com/prometheus/prometheus@v0.300.0
 ```
 
-For the
-Prometheus v2.y.z releases, we published the equivalent v0.y.z tags.
+Para las versiones de Prometheus v2.y.z, publicamos las etiquetas v0.y.z equivalentes.
 
-Therefore, a user that would want to use Prometheus v2.35.0 as a library could do:
+Por lo tanto, un usuario que quisiera usar Prometheus v2.35.0 como biblioteca podría hacer:
 
 ```shell
 go get github.com/prometheus/prometheus@v0.35.0
 ```
 
-This solution makes it clear that we might break our internal Go APIs between
-minor user-facing releases, as [breaking changes are allowed in major version
-zero](https://semver.org/#spec-item-4).
+Esta solución deja claro que podríamos romper nuestras APIs internas de Go entre
+versiones menores orientadas al usuario, ya que [se permiten cambios incompatibles en la versión
+principal cero](https://semver.org/#spec-item-4).
 
-## React UI Development
+## Desarrollo de la interfaz React
 
-For more information on building, running, and developing on the React-based UI, see the React app's [README.md](web/ui/README.md).
+Para más información sobre cómo compilar, ejecutar y desarrollar la interfaz basada en React, consulta el [README.md](web/ui/README.md) de la aplicación React.
 
-## More information
+## Más información
 
-* Godoc documentation is available via [pkg.go.dev](https://pkg.go.dev/github.com/prometheus/prometheus). Due to peculiarities of Go Modules, v3.y.z will be displayed as v0.3y.z (the y in v0.3y.z is always padded to two digits, with a leading zero if needed), while v2.y.z will be displayed as v0.y.z.
-* See the [Community page](https://prometheus.io/community) for how to reach the Prometheus developers and users on various communication channels.
+* La documentación de Godoc está disponible a través de [pkg.go.dev](https://pkg.go.dev/github.com/prometheus/prometheus). Debido a particularidades de los Módulos de Go, v3.y.z se mostrará como v0.3y.z (la y en v0.3y.z siempre se completa con dos dígitos, con un cero inicial si es necesario), mientras que v2.y.z se mostrará como v0.y.z.
+* Consulta la [página de la Comunidad](https://prometheus.io/community) para saber cómo contactar a los desarrolladores y usuarios de Prometheus a través de varios canales de comunicación.
 
-## Contributing
+## Contribuir
 
-Refer to [CONTRIBUTING.md](https://github.com/prometheus/prometheus/blob/main/CONTRIBUTING.md)
+Consulta [CONTRIBUTING.md](https://github.com/prometheus/prometheus/blob/main/CONTRIBUTING.md)
 
-## License
+## Licencia
 
-Apache License 2.0, see [LICENSE](https://github.com/prometheus/prometheus/blob/main/LICENSE).
+Apache License 2.0, consulta [LICENSE](https://github.com/prometheus/prometheus/blob/main/LICENSE).
 
 [hub]: https://hub.docker.com/r/prom/prometheus/
 [quay]: https://quay.io/repository/prometheus/prometheus
